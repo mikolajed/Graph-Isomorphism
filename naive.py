@@ -38,30 +38,24 @@ def __main__():
 	line = input().split()
 	n = int(line[0])
 	m = int(line[1]) 
-	edges = []
+	
+	G = Graph(n, m)
 	for i in range(m):
 		line = input().split()
-		edges.append((int(line[0]), int(line[1])))
-
-	G = Graph(n, m, edges)
+		G.add_edge(int(line[0]), int(line[1]))
 
 	line = input().split()
 	n = int(line[0])
 	m = int(line[1]) 
-	edges = []
+	
+	H = Graph(n, m)
 	for i in range(m):
 		line = input().split()
-		edges.append((int(line[0]), int(line[1])))
-
-	H = Graph(n, m, edges)
-	#H.print_graph()
+		H.add_edge(int(line[0]), int(line[1]))
 	
 	if (isomorphic(G, H) == True):
 		print("YES", end='')
 	else:
 		print("NO", end='')
-__main__()
 
-#edges = input()
-#print(edges)
-#if isomorphic(Graph G(input()))
+__main__()
