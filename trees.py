@@ -15,6 +15,9 @@ class Tree:
 			u, v = edge
 			self.graph[u].append(v)
 	
+	def add_edge(self, u, v):
+		self.graph[u].append(v)
+	
 	def print_graph(self):
 		for i, adj_list in enumerate(self.graph):
 			print(f"Node {i}: {adj_list}")
@@ -48,9 +51,9 @@ def isomorphic(G, H):
 	while (len(layer_G) == 0 or len(layer_H) == 0):
 		# process a layer in G
 		layer_G_code = set()
-		while (visited_G[layer_G[-1]] == 1)	:
+		while (visited_G[layer_G[-1]] == 1):
 			v = layer_G.pop()
-	 		children = []
+			children = []
 			for i in len(G.graph[v]):
 				if visited_G[i] == 0:
 					children.append(i)
@@ -64,12 +67,12 @@ def isomorphic(G, H):
 				if visited_G[i] == 0:
 					children.append(i)
 					visited_G[i] = 1
-		
+
 		# process a layer in H
 		layer_H_code = set()
 		while (visited_H[layer_H[-1]] == 1)	:
 			v = layer_H.pop()
-	 		children = []
+			children = []
 			for i in len(H.graph[v]):
 				if visited_H[i] == 0:
 					children.append(i)
