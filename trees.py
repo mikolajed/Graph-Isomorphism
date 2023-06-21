@@ -14,83 +14,112 @@ class Tree:
 		for edge in edges:
 			u, v = edge
 			self.graph[u].append(v)
+			self.graph[v].append(u)
 	
 	def add_edge(self, u, v):
 		self.graph[u].append(v)
+		self.graph[v].append(u)
 	
 	def print_graph(self):
 		for i, adj_list in enumerate(self.graph):
 			print(f"Node {i}: {adj_list}")
 
-def isomorphic(G, H):
-	visited_G = [0] * G.num_nodes
-	visited_H = [0] * H.num_nodes
-	# nodes of one layer in G
+def is_isomorphic(G, H):
+	if (G.num_nodes != H.num_nodes or G.num_edges != H.num_edges):
+		return False
+	# TODO: find roots
+	if check_isomorphism_rooted(G, 0, H, 0):
+		return True
+	else:
+		return False
+
+def check_isomorphism_rooted(G, root_G, H, root_H):
+	visited_G= [0] * G.num_nodes
+	visited_H= [0] * H.num_nodes
 	layer_G = []
-	# find leafes and append them onto the stack
+	layer_H = []
+	# find leaves
 	for i in range(G.num_nodes):
 		if (len(G.graph[i]) == 1):
 			layer_G.append(i)
-			visited_G[i] = 1
-	# nodes of one layer in H
-	layer_H = []
-	# find leafes and append them onto the stack
 	for i in range(H.num_nodes):
 		if (len(H.graph[i]) == 1):
 			layer_H.append(i)
-			visited_H[i] = 1
 
-	# dictionary with a pair id number and a set representing set of id of a children nodes
-	indexes = dict()
-	# initial index - used to indentify leafes
-	idx = 0
-	# store a pair node number and its index in indexes dict
-	ids_G = dict()		
-	ids_H = dict()	
+	indexes_G = [0] * G.num_nodes
+	indexes_H = [0] * H.num_nodes
 
-	while (len(layer_G) == 0 or len(layer_H) == 0):
-		# process a layer in G
-		layer_G_code = set()
-		while (visited_G[layer_G[-1]] == 1):
+	indexes_used = []
+	# as long as there is a node to be processed in both graphs
+	while (len(layer_G) != 0 and len(layer_H) != 0):
+		layer_code_G = []
+		layer_code_H = []
+		next_layer_G = []
+		next_layer_H = []
+
+		# process a layer of outermost non-visited nodes in G
+		while (len(layer_G)):
 			v = layer_G.pop()
+			if visited_G[v] == 1:
+				continue
+			visited_G[v] = 1
 			children = []
-			for i in len(G.graph[v]):
-				if visited_G[i] == 0:
-					children.append(i)
-			if (children not in indexes):
-				idx += 1
-				indexes[children] = idx
-			ids_G[v] = indexes[children]
-			layer_G_code.append(idx)
-			# push the parent onto the stack
-			for i in len(G.graph[v]):
-				if visited_G[i] == 0:
-					children.append(i)
-					visited_G[i] = 1
-
-		# process a layer in H
-		layer_H_code = set()
-		while (visited_H[layer_H[-1]] == 1)	:
+			for i in range(len(G.graph[v])):
+				if visited_G[i] == 1:
+					children.append(indexes_G[i])
+			# check if given multiset of indexes is associated with an index
+			children = sorted(children)
+			if children in indexes_used:
+				idx = indexes_used.index(children)
+				indexes_G[v] = idx
+			else:
+				indexes_used.append(children)
+				indexes_G[v] = len(indexes_used)
+			# find the parent of v, it should be processed in the next layer 
+			for i in range(len(G.graph[v])):
+				if visited_G[i] == 0 and i != root_G:
+					next_layer_G.append(i)
+			layer_code_G.append(indexes_G[v])
+		
+		# process a layer of outermost non-visited nodes in H
+		while (len(layer_H)):
 			v = layer_H.pop()
+			if visited_H[v] == 1:
+				continue
+			visited_H[v] = 1
 			children = []
-			for i in len(H.graph[v]):
-				if visited_H[i] == 0:
-					children.append(i)
-			if (children not in indexes):
-				idx += 1
-				indexes[children] = idx
-			ids_H[v] = indexes[children]
-			layer_H_code.append(idx)
-			# push the parent onto the stack
-			for i in len(H.graph[v]):
-				if visited_H[i] == 0:
-					children.append(i)
-					visited_H[i] = 1
-
-		if (layer_G_code != layer_H_code):
+			for i in range(len(H.graph[v])):
+				if visited_H[i] == 1:
+					children.append(indexes_H[i])
+			# check if given multiset of indexes is associated with an index
+			children = sorted(children)
+			if children in indexes_used:
+				idx = indexes_used.index(children)
+				indexes_H[v] = idx
+			else:
+				indexes_used.append(children)
+				indexes_H[v] = len(indexes_used)
+			# find the parent of v, it should be processed in the next layer 
+			for i in range(len(H.graph[v])):
+				if visited_H[i] == 0 and i != root_H:
+					next_layer_H.append(i)
+			layer_code_H.append(indexes_H[v])
+	
+		layer_G = [ ele for ele in next_layer_G ]
+		layer_H = [ ele for ele in next_layer_H ]
+		layer_code_G = sorted(layer_code_G)	
+		layer_code_H = sorted(layer_code_H)
+		
+		if layer_code_G != layer_code_H:
+			print("LCG:",layer_code_G)
+			print("LCH:",layer_code_H)
+			print("I:",indexes_used)
 			return False
-
-	return (ids_G[G.root] == idx_H[H.root])
+			
+	if indexes_G[root_G] == indexes_H[root_H]:
+		return True
+	else:
+		return False
 
 def __main__():
 	line = input().split()
@@ -109,7 +138,7 @@ def __main__():
 		line = input().split()
 		H.add_edge(int(line[0]), int(line[1]))
 	
-	if (isomorphic(G, H) == True):
+	if (is_isomorphic(G, H) == True):
 		print("YES", end='')
 	else:
 		print("NO", end='')
