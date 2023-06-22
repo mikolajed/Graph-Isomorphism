@@ -6,6 +6,7 @@ class Tree:
 		self.num_nodes = n
 		self.num_edges = m
 		self.graph = []
+		self.depth = [0] * n
 		# if not a tree
 		if (m != n-1):
 			exit(0)
@@ -33,40 +34,55 @@ def is_isomorphic(G, H):
 	else:
 		return False
 
+# finds and returns depth of each node in the tree
+# G - graph
+# v - current node
+# d - current depth
+# parent - parent node
+def recalculate_depths(G, v, d, parent):
+	G.depth[v] = d	
+	for u in G.graph[v]:
+		if u != parent:
+			recalculate_depths(G, u, d+1, v)
+	
 def check_isomorphism_rooted(G, root_G, H, root_H):
-	visited_G= [0] * G.num_nodes
-	visited_H= [0] * H.num_nodes
-	layer_G = []
-	layer_H = []
-	# find leaves
-	for i in range(G.num_nodes):
-		if (len(G.graph[i]) == 1):
-			layer_G.append(i)
-	for i in range(H.num_nodes):
-		if (len(H.graph[i]) == 1):
-			layer_H.append(i)
+	recalculate_depths(G, root_G, 0, -1)
+	recalculate_depths(H, root_H, 0, -1)
 
+	# order to process nodes based on their depths
+	order_G = dict()
+	order_H = dict()
+	for i in range(G.num_nodes):
+		if (G.depth[i] not in order_G):
+			order_G[G.depth[i]] = []
+		order_G[G.depth[i]].append(i)
+	for i in range(H.num_nodes):
+		if (H.depth[i] not in order_H):
+			order_H[H.depth[i]] = []
+		order_H[H.depth[i]].append(i)
+	order_G = dict(sorted(order_G.items(), key=lambda x: x[0], reverse=True))
+	order_H = dict(sorted(order_H.items(), key=lambda x: x[0], reverse=True))
+
+	# tree dephs of G and H are different
+	if len(order_G) != len(order_H):
+		return False
+
+	# index is associated with a unique number, two nodes have the same index if the multisets of indexes of their children are the same
 	indexes_G = [0] * G.num_nodes
 	indexes_H = [0] * H.num_nodes
-
+	# all indexes used, shared between two trees
 	indexes_used = []
-	# as long as there is a node to be processed in both graphs
-	while (len(layer_G) != 0 and len(layer_H) != 0):
-		layer_code_G = []
-		layer_code_H = []
-		next_layer_G = []
-		next_layer_H = []
 
-		# process a layer of outermost non-visited nodes in G
-		while (len(layer_G)):
-			v = layer_G.pop()
-			if visited_G[v] == 1:
-				continue
-			visited_G[v] = 1
+	# process each depth starting from leaves of the larges depth
+	for depth, nodes in order_G.items():
+		# for each node j in the k-th depth
+		layer_G = []
+		layer_H = []
+		for v in nodes:
 			children = []
-			for i in range(len(G.graph[v])):
-				if visited_G[i] == 1:
-					children.append(indexes_G[i])
+			for u in G.graph[v]:
+				if G.depth[u] > G.depth[v]:
+					children.append(indexes_G[u])
 			# check if given multiset of indexes is associated with an index
 			children = sorted(children)
 			if children in indexes_used:
@@ -74,23 +90,13 @@ def check_isomorphism_rooted(G, root_G, H, root_H):
 				indexes_G[v] = idx
 			else:
 				indexes_used.append(children)
-				indexes_G[v] = len(indexes_used)
-			# find the parent of v, it should be processed in the next layer 
-			for i in range(len(G.graph[v])):
-				if visited_G[i] == 0 and i != root_G:
-					next_layer_G.append(i)
-			layer_code_G.append(indexes_G[v])
-		
-		# process a layer of outermost non-visited nodes in H
-		while (len(layer_H)):
-			v = layer_H.pop()
-			if visited_H[v] == 1:
-				continue
-			visited_H[v] = 1
+				indexes_G[v] = len(indexes_used) - 1
+			layer_G.append(indexes_G[v])
+		for v in nodes:
 			children = []
-			for i in range(len(H.graph[v])):
-				if visited_H[i] == 1:
-					children.append(indexes_H[i])
+			for u in H.graph[v]:
+				if H.depth[u] > H.depth[v]:
+					children.append(indexes_H[u])
 			# check if given multiset of indexes is associated with an index
 			children = sorted(children)
 			if children in indexes_used:
@@ -98,22 +104,13 @@ def check_isomorphism_rooted(G, root_G, H, root_H):
 				indexes_H[v] = idx
 			else:
 				indexes_used.append(children)
-				indexes_H[v] = len(indexes_used)
-			# find the parent of v, it should be processed in the next layer 
-			for i in range(len(H.graph[v])):
-				if visited_H[i] == 0 and i != root_H:
-					next_layer_H.append(i)
-			layer_code_H.append(indexes_H[v])
+				indexes_H[v] = len(indexes_used) - 1
+			layer_H.append(indexes_H[v])
 	
-		layer_G = [ ele for ele in next_layer_G ]
-		layer_H = [ ele for ele in next_layer_H ]
-		layer_code_G = sorted(layer_code_G)	
-		layer_code_H = sorted(layer_code_H)
+		layer_G = sorted(layer_G)	
+		layer_H = sorted(layer_H)
 		
-		if layer_code_G != layer_code_H:
-			print("LCG:",layer_code_G)
-			print("LCH:",layer_code_H)
-			print("I:",indexes_used)
+		if layer_G != layer_H:
 			return False
 			
 	if indexes_G[root_G] == indexes_H[root_H]:
