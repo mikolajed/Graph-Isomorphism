@@ -117,7 +117,11 @@ def generate_two_dags(n):
 def generate_tree(n):
 	edges = []
 	vertices = set()
-	vertices.add(0)
+
+	root = 0
+
+	root = random.randint(0, n-1)
+	vertices.add(root)
 
 	for i in range(n-1):
 		parent = random.choice(list(vertices))
