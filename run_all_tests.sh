@@ -1,0 +1,10 @@
+cd tests; 
+unzip tests_a.zip ; 
+unzip tests_a_dense.zip ; 
+unzip tests_tr0.zip ; 
+unzip tests_t.zip ;
+cd ..; 
+echo "RUN naive.py for tests_a\n"; python3 test.py naive.py tests/tests_a;
+echo "RUN naive.py for tests_a_dense\n"; python3 test.py naive.py tests/tests_a_dense;
+echo "run trees.py for tests_tr0\n"; python3 test.py trees.py tests/tests_tr0;
+echo "run trees.py for tests_t\n"; python3 test.py trees.py tests/tests_t;
