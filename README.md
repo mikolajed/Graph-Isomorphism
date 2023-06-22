@@ -21,8 +21,8 @@ The former takes an input from stdin but only for a single graph, so using tests
 `head -n 8 tests/tests_tr0/dag_8_0_1.in | python3 draw.py`
 
 <p>
-	<img src="./images/sample_drawing.png" alt="Image 1" width="50%" style="padding-right: 10px;" />
-	<img src="./images/sample_drawing2.png" alt="Image 2" width="50%" style="padding-right: 10px;" />
+	<img src="./images/sample_drawing.png" alt="Image 1" width="50%"/>
+	<img src="./images/sample_drawing2.png" alt="Image 2" width="50%"/>
 </p>
 
 # Tests
