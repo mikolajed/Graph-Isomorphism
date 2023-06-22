@@ -16,3 +16,5 @@ Each file contains one test case and describes two graphs, one after another. Th
 ## Test File Decompression
 Please note that the test files need to be manually decompressed before use.
 
+## Naming Scheme
+Input files have names `*.in` and contain information about two graphs. The output files named `*.out` contain an answer `YES` or `NO`. Name of each test case contains number of nodes, type of a graph, number of the case having with its number of nodes and the last digit indicates if it is a positive of negative case. 
