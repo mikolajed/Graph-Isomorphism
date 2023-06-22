@@ -21,7 +21,7 @@ if flag == 't':
 			for i in range(bound):
 				curr += 1
 				if (1):
-					status = 100*curr/done
+					status = round(100*curr/done, 2)
 					print(str(status)+'%')
 					m = random.randint(n, int(n*(n-1)/2))
 					infile = open('dag_'+str(n)+'_'+str(i)+'_'+flag+'_'+str(isomorphic)+'.in', 'w')
@@ -46,7 +46,7 @@ else:
 		for n in range(4, 10):
 			for i in range((n*(n-1)//2)):
 				curr += 1
-				status = 100*curr/done
+				status = round(100*curr/done, 2)
 				print(str(status)+'%')
 				m = random.randint(n, int(n*(n-1)/2))
 				infile = open('dag_'+str(n)+'_'+str(i)+'_'+flag+'_'+str(isomorphic)+'.in', 'w')

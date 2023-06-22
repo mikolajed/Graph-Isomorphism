@@ -118,15 +118,15 @@ def generate_tree(n):
 	edges = []
 	vertices = set()
 
-	root = 0
-
+	#root = 0
 	root = random.randint(0, n-1)
 	vertices.add(root)
 
-	for i in range(n-1):
-		parent = random.choice(list(vertices))
-		vertices.add(i + 1)
-		edges.append((parent, i + 1))
+	for i in range(n):
+		if i != root:
+			parent = random.choice(list(vertices))
+			vertices.add(i)
+			edges.append((parent, i))
 
 	return edges
 
