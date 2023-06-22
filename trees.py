@@ -1,5 +1,3 @@
-from itertools import permutations
-
 class Tree:
 	def __init__(self, n, m, root=0, edges=[]):
 		self.root = root
@@ -20,34 +18,73 @@ class Tree:
 	def add_edge(self, u, v):
 		self.graph[u].append(v)
 		self.graph[v].append(u)
+
+	# finds and returns depth of each node in the tree
+	# self - graph
+	# v - current node
+	# d - current depth
+	# parent - parent node
+	def recalculate_depths(self, v=0, d=0, parent=-1):
+		self.depth[v] = d	
+		for u in self.graph[v]:
+			if u != parent:
+				self.recalculate_depths(u, d+1, v)
 	
+	# finds the longest path in the tree, roots are in the middle
+	# there are two roots is the longest path is composed of even number of nodes
+	# one root otherwise, however, IN THIS CASE THE SECOND ROOT IS JUST A COPY OF THE FIRST
+	# THE FUNCTION ALWAYS RETURNS TWO ROOTS
+	def find_roots(self):
+		self.recalculate_depths()		
+		roots = []
+
+		max_len = 1
+		for i in range(self.num_nodes):
+			for a in self.graph[i]:
+				for b in self.graph[i]:
+					if (a != b and self.depth[a] + self.depth[b] + 1):
+						max_len = self.depth[a] + self.depth[b] + 1
+
+		longest_path = []
+		for i in range(self.num_nodes):
+			for a in self.graph[i]:
+				for b in self.graph[i]:
+					if (max_len == self.depth[a] + self.depth[b] + 1):
+						longest_path.append(i)
+
+		# find the nodes in the middle of the longest path
+		# find leaves first
+		queue = []
+		visited = [1] * self.num_nodes
+		for i in longest_path:
+			visited[i] = 0
+		for i in longest_path:
+			if len(self.graph[i]):
+				queue.append(i)
+
+		topological_order = []
+		while len(queue):
+			v = queue.pop(0)
+			visited[v] = 1
+			topological_order.append(v)
+			for u in self.graph[v]:
+				# find parent
+				if visited[u] == 0:
+					queue.append(u)
+
+		if (len(longest_path)%2 == 0):
+			return topological_order[-1], topological_order[-2]
+		else:
+			return topological_order[-1], topological_order[-1]
+					
 	def print_graph(self):
 		for i, adj_list in enumerate(self.graph):
 			print(f"Node {i}: {adj_list}")
 
-def is_isomorphic(G, H):
-	if (G.num_nodes != H.num_nodes or G.num_edges != H.num_edges):
-		return False
-	# TODO: find roots
-	if check_isomorphism_rooted(G, 0, H, 0):
-		return True
-	else:
-		return False
 
-# finds and returns depth of each node in the tree
-# G - graph
-# v - current node
-# d - current depth
-# parent - parent node
-def recalculate_depths(G, v, d, parent):
-	G.depth[v] = d	
-	for u in G.graph[v]:
-		if u != parent:
-			recalculate_depths(G, u, d+1, v)
-	
 def check_isomorphism_rooted(G, root_G, H, root_H):
-	recalculate_depths(G, root_G, 0, -1)
-	recalculate_depths(H, root_H, 0, -1)
+	G.recalculate_depths(root_G)
+	H.recalculate_depths(root_H)
 
 	# order to process nodes based on their depths
 	order_G = dict()
@@ -114,6 +151,18 @@ def check_isomorphism_rooted(G, root_G, H, root_H):
 			return False
 			
 	if indexes_G[root_G] == indexes_H[root_H]:
+		return True
+	else:
+		return False
+
+def is_isomorphic(G, H):
+	if (G.num_nodes != H.num_nodes or G.num_edges != H.num_edges):
+		return False
+	root1g, root2g = G.find_roots() # could be at most two, always returns two
+	root1h, root2h = H.find_roots() # could be at most two, always returns two
+
+	# checks isomorphism of two rooted trees
+	if check_isomorphism_rooted(G, root1g, H, root1h) or check_isomorphism_rooted(G, root1g, H, root2h):
 		return True
 	else:
 		return False
