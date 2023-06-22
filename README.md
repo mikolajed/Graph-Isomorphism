@@ -20,10 +20,11 @@ The latter method is recommended since it features simple GUI. Run it with `pyth
 The former takes an input from stdin but only for a single graph, so using tests graph needs taking only a part of a file. Note both graph in those file may have different number of edges. Example use:
 `head -n 8 tests/tests_tr0/dag_8_0_1.in | python3 draw.py`
 
-<div style="display: flex;">
-	<img src="./images/sample_drawing.png" alt="Image 1" style="flex: 1;"/>
-	<img src="./images/sample_drawing2.png" alt="Image 2" style="flex: 1;"/>
-</div>
+| Image 1 | Image 2 |
+|---------|---------|
+| ![Image 1](./images/sample_drawing.png) | ![Image 2](./images/sample_drawing2.png) |
+
+The edges do not show direction, however, in the test caes if an edges from `v` to `u` it present, this means there isno edge between `u` and `v`. For DAGs the drawing might seem to have cycles but it is only on the drawing.
 
 # Tests
 All tests in the tests directory have successfully passed.
