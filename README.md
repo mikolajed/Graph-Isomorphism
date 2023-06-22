@@ -19,6 +19,7 @@ Either `draw.py` or `drawApp.py` can be used for drawing the graphs.
 The latter method is recommended since it features simple GUI. Run it with `python3 drawApp.py` and then select a file from with to draw. It should be used with provided test cases, where each of then contains two graphs, whose isomorphism we want to check, so choose if it should be the first or the second graph from the file.
 The former takes an input from stdin but only for a single graph, so using tests graph needs taking only a part of a file. Note both graph in those file may have different number of edges. Example use:
 `head -n 8 tests/tests_tr0/dag_8_0_1.in | python3 draw.py`
+![Drawing](./images/sample_drawing.png)
 
 # Tests
 All tests in the tests directory have successfully passed.
@@ -26,5 +27,5 @@ To repliceate the tests first zip file in `./tests/` should be uncompresssed. Fo
 `python3 test.py naive.py tests/tests_a`
 `python3 test.py naive.py tests/tests_a_dense`
 `python3 test.py trees.py tests/tests_tr0`
-`python3 test.py trees.py tests/tests_t`
+`python3 test.py trees.py tests/tests_t`. The script `test.py` takes two command line arguments the script for running the test and the data source.
 
