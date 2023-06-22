@@ -20,10 +20,10 @@ The latter method is recommended since it features simple GUI. Run it with `pyth
 The former takes an input from stdin but only for a single graph, so using tests graph needs taking only a part of a file. Note both graph in those file may have different number of edges. Example use:
 `head -n 8 tests/tests_tr0/dag_8_0_1.in | python3 draw.py`
 
-<p>
-	<img src="./images/sample_drawing.png" alt="Image 1" width="50% - 5px"/>
-	<img src="./images/sample_drawing2.png" alt="Image 2" width="50% - 5px"/>
-</p>
+<div style="display: flex;">>
+	<img src="./images/sample_drawing.png" alt="Image 1" style="flex: 1;"/>
+	<img src="./images/sample_drawing2.png" alt="Image 2" style="flex: 1;"/>
+</div>
 
 # Tests
 All tests in the tests directory have successfully passed.
