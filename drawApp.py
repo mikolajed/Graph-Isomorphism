@@ -18,7 +18,7 @@ def draw_graph():
         m1 = int(line[1])
 
         # Create an empty graph for the first graph
-        G1 = nx.Graph()
+        G1 = nx.DiGraph()
 
         # Add nodes to the first graph
         nodes1 = range(0, n1)
@@ -27,7 +27,7 @@ def draw_graph():
         # Add edges to the first graph
         for _ in range(m1):
             u, v = map(int, file.readline().split())
-            G1.add_edge(u, v)
+            G1.add_edge(u, v, arrowstyle='->', arrowsize=10)
 
         # Read the number of nodes and edges for the second graph
         line = file.readline().split()
@@ -35,7 +35,7 @@ def draw_graph():
         m2 = int(line[1])
 
         # Create an empty graph for the second graph
-        G2 = nx.Graph()
+        G2 = nx.DiGraph()
 
         # Add nodes to the second graph
         nodes2 = range(0, n2)
@@ -44,7 +44,7 @@ def draw_graph():
         # Add edges to the second graph
         for _ in range(m2):
             u, v = map(int, file.readline().split())
-            G2.add_edge(u, v)
+            G2.add_edge(u, v, arrowstyle='->', arrowsize=10)
 
     # Choose which graph to draw based on the selected option
     if selected_graph_var.get() == "First Graph":

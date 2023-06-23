@@ -25,7 +25,6 @@ The former takes an input from stdin but only for a single graph, so using tests
 |---------|---------|
 | ![Image 1](./images/sample_drawing.png) | ![Image 2](./images/sample_drawing2.png) |
 
-The edges do not show direction, however, in the test cases if an edges from `v` to `u` it present, this means there is no edge between `u` and `v`. For DAGs the drawing might seem to have cycles but it is only on the drawing.
 
 # Tests
 All tests in the tests directory have successfully passed, only few run too long and where stopped during the process (not efficient use of Python).
