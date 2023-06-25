@@ -11,13 +11,13 @@ flag = 't'
 
 if flag == 't':
 	curr = 0
-	done = 508
+	done = 2476
 	for isomorphic in [0, 1]:
 		n = 4
-		while (n < 200000):
-			bound = 10
-			if (n < 16):
-				bound = n
+		while (n < 300000):
+			bound = 8
+			if (n <= 16):
+				bound = (n-1)*(n-2)
 			for i in range(bound):
 				curr += 1
 				if (1):
@@ -33,7 +33,7 @@ if flag == 't':
 					else:
 						outfile.write("NO")
 					outfile.close()
-			if (n < 16):
+			if (n <= 16):
 				n += 1
 			else:
 				n *= 2

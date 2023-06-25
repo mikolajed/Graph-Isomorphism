@@ -136,8 +136,10 @@ def generate_two_trees(n):
 	# one random bijection which maps nodes between two dags
 	#perm = random_permutation(list(range(n)))
 	perm = list(range(n))
-	for ele in perm:
-		ele = (ele + 128)%n
+
+	if (isomorphic_true == 1):	
+		for i in range(len(perm)):
+			perm[i] = (perm[i] + 11)%n
 	f = lambda i: perm[i]
 
 	edges2 = []
@@ -147,8 +149,26 @@ def generate_two_trees(n):
 
 	# create different dags which are as similars as possible but with two different edges deleted	
 	if (isomorphic_true == 0):	
-		# changes parent of third node
 		edges2[1] = ( (list(edges2[1])[0] + 1)%2, edges2[1][1])
+		# COMMENTED PART IS FOR UNTDIRECTED TREES, and has a bug
+		# find a leaf and change its parent
+		#degree = [0] * n
+		#for v, u in edges2:
+		#	# add to a parent
+		#	degree[v] += 1
+		#leaves = []
+		#for i in range(n):
+		#	if degree[i] == 0:
+		#		leaves.append(i)
+		#for i in range(len(edges2)):
+		#	v, u = edges2[i]
+		#	if u == leaves[0]:
+		#		if len(leaves) > 1:
+		#			edges2[i] = (leaves[1], edges2[i][1])
+		#		#the tree is a just a single path
+		#		else:
+		#			edges2[i] = ((i+1)%n, edges2[i][1])
+		#		break
 	
 	print(n, len(edges))
 	for e in edges:
