@@ -9,9 +9,9 @@ The tests are located in directories with the following acronyms:
 ## Test File Format
 Each file contains one test case and describes two graphs, one after another. The format of the test file is as follows:
 1. Number of nodes and edges for the first graph.
-2. List of the edges, with one edge per line.
+2. List of the edges, with one edge per line. (parent, node)
 3. Number of nodes and edges for the second graph.
-4. List of the edges, with one edge per line.
+4. List of the edges, with one edge per line. (parent, node)
 5. Nodes are numbered starting from 0.
 
 ## Test File Decompression
