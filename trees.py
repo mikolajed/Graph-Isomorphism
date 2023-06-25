@@ -160,7 +160,6 @@ def check_isomorphism_rooted(G, root_G, H, root_H):
 					children.append(indexes_H[u])
 			# check if given multiset of indexes is associated with an index
 			children = sorted(children)
-			#print("NODE: ",v,"CHLD: ",children)
 			if children in indexes_used:
 				idx = indexes_used.index(children)
 				indexes_H[v] = idx
@@ -169,10 +168,6 @@ def check_isomorphism_rooted(G, root_G, H, root_H):
 				indexes_H[v] = len(indexes_used) - 1
 			layer_H.append(indexes_H[v])
 	
-		#print("LAYER _G: ", layer_G)	
-		#print("LAYER _H: ", layer_H)	
-		#print("index _G: ", _G)	
-		#print("index _H: ", layer_H)	
 		layer_G = sorted(layer_G)	
 		layer_H = sorted(layer_H)
 		
@@ -200,7 +195,6 @@ def is_isomorphic(G, H):
 			else:
 				# not a tree
 				print("NOT A TREE")
-				print("G parents: ",G.parent)
 				exit(1)
 
 	root_h = -1
@@ -211,7 +205,6 @@ def is_isomorphic(G, H):
 			else:
 				# not a tree
 				print("NOT A TREE")
-				print("H parents: ",H.parent)
 				exit(1)
 
 	# checks isomorphism of two rooted trees for an undirected tree
