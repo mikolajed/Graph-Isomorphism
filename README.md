@@ -34,7 +34,7 @@ The former takes an input from stdin but only for a single graph, so using tests
 |---------|---------|
 | ![g5](./images/t_8_0_0_a.png) | ![g6](./images/t_8_0_0_b.png) |
 
-| Positive Case #1 (first graph) | Positive Case #1 (second graph) |
+| Positive Case #2 (first graph) | Positive Case #2 (second graph) |
 |---------|---------|
 | ![g7](./images/t_32_0_1_a.png) | ![g8](./images/t_32_0_1_b.png) |
 
