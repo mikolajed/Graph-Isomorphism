@@ -46,4 +46,8 @@ To repliceate the tests, first zip file in `./tests/` should be uncompresssed. F
 `python3 test.py trees.py tests/tests_tr0`
 `python3 test.py trees.py tests/tests_t`
 `python3 test.py trees.py tests/tests_t_MORE`. Their results can be found in `./tests/tests.log`. The script `test.py` takes two command line arguments the script for running the test and the data source. Additionally, `./run_all_tests.sh` can be run to automatically decompress and run all cases.
+### Tests for `naive.py`
+There a few hundred tests in `tests/tests_a` and `tests/tests_a_dense` which describe small DAGs with up to 9 nodes.
 
+### Tests for `trees.py`
+There a few thousand tests in `tests/tests_t`, `tests/tests_tr0` and `tests/tests_t_MORE`. They contain cases with trees with different number of nodes - 4, 5, ... , 15, 16, 32, 64, 128, ..., 131072, 262144.
