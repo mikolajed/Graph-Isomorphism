@@ -36,7 +36,7 @@ The former takes an input from stdin but only for a single graph, so using tests
 
 | Positive Case #1 (first graph) | Positive Case #1 (second graph) |
 |---------|---------|
-| ![g7](./images/t_32_0_0_a.png) | ![g8](./images/t_32_0_0_b.png) |
+| ![g7](./images/t_32_0_1_a.png) | ![g8](./images/t_32_0_1_b.png) |
 
 # Tests
 All tests in the tests directory have successfully passed, only few run too long and where stopped during the process (not efficient use of Python).
