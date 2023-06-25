@@ -3,6 +3,7 @@ The tests are located in directories with the following acronyms:
 - `tests_a`: Contains small random graphs.
 - `tests_a_dense`: Contains small dense graphs.
 - `tests_t`: Contains trees.
+- `tests_t_MORE`: Contains trees but more cases with bigger trees.
 - `tests_tr0`: Contains tress rooted at 0.
 
 ## Test File Format
