@@ -39,13 +39,8 @@ The former takes an input from stdin but only for a single graph, so using tests
 | ![g7](./images/t_32_0_1_a.png) | ![g8](./images/t_32_0_1_b.png) |
 
 # Tests
-All tests in the tests directory have successfully passed, only few run too long and where stopped during the process (not efficient use of Python).
-To repliceate the tests, first zip file in `./tests/` should be uncompresssed. Following tests were run:
-`python3 test.py naive.py tests/tests_a`
-`python3 test.py naive.py tests/tests_a_dense`
-`python3 test.py trees.py tests/tests_tr0`
-`python3 test.py trees.py tests/tests_t`
-`python3 test.py trees.py tests/tests_t_MORE`. Their results can be found in `./tests/tests.log`. The script `test.py` takes two command line arguments the script for running the test and the data source. Additionally, `./run_all_tests.sh` can be run to automatically decompress and run all cases.
+All tests in the tests directory have successfully passed (~4 thousand). To repliceate the tests, it is recommended to run all tests with `./run_all_tests.sh` alternatively they can be run manually but zip files containing them in `./tests/` should be decompresssed. Example use: `python3 test.py trees.py tests/tests_t_MORE`. Their results can be found in `./tests/tests.log`. The script `test.py` takes two command line arguments the script for running the test and the data source.
+
 ### Tests for `naive.py`
 There a few hundred tests in `tests/tests_a` and `tests/tests_a_dense` which describe small DAGs with up to 9 nodes.
 
